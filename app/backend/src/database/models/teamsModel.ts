@@ -1,12 +1,12 @@
 import { DataTypes, InferAttributes, Model } from 'sequelize';
 import db from '.';
 
-class teams extends Model<InferAttributes<teams>> {
+class Teams extends Model<InferAttributes<Teams>> {
   declare id: number;
   declare teamName: string;
 }
 
-teams.init({
+Teams.init({
   id: {
     primaryKey: true,
     type: DataTypes.NUMBER,
@@ -23,3 +23,5 @@ teams.init({
   timestamps: false,
   modelName: 'teams',
 });
+
+export default Teams;
