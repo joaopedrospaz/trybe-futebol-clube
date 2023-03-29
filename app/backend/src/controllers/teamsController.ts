@@ -12,6 +12,6 @@ export default class TeamsController implements ITeamsController {
   async getAll(req: Request, res: Response): Promise<Response> {
     const allTeams = await this._teamsService.getAll();
 
-    return res.status(200).json({ allTeams });
+    return res.status(200).json(allTeams);
   }
 }
