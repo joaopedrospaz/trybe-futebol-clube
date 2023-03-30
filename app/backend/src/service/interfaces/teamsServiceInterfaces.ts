@@ -4,4 +4,5 @@ export interface ITeam {
 }
 export default interface TeamServiceBase {
   getAll(): Promise<ITeam[]>
+  getById(id: number): Promise<ITeam | null>
 }

@@ -12,4 +12,12 @@ export default class TeamsService implements TeamServiceBase {
     const all = await this._teamModel.findAll();
     return all;
   }
+
+  async getById(id: number): Promise<ITeam | null> {
+    const team = await this._teamModel.findByPk(id);
+    // alterar essa tipagem usando <T>
+    console.log(team);
+
+    return team as ITeam;
+  }
 }

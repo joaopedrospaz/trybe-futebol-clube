@@ -13,9 +13,9 @@ const { expect } = chai;
 
 describe('Testa a rota de Teams', function() {
     let chaiHttpResponse: Response;
-    //   afterEach(()=>{
-    //       sinon.restore();
-    //   });
+      afterEach(()=>{
+          sinon.restore();
+      });
     describe('GET /teams', () => {
         it('Retornar a lista completa de times', async function() {
             sinon.stub(Teams, 'findAll').resolves(Allteams as Teams[]);
