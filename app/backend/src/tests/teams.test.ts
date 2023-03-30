@@ -16,8 +16,7 @@ describe('Testa a rota de Teams', function() {
       afterEach(()=>{
           sinon.restore();
       });
-    describe('GET /teams', () => {
-        it('Retornar a lista completa de times', async function() {
+        it('GET /teams: Retornar a lista completa de times', async function() {
             sinon.stub(Teams, 'findAll').resolves(Allteams as Teams[]);
 
              chaiHttpResponse = await chai.request(app).get('/teams');
@@ -25,7 +24,16 @@ describe('Testa a rota de Teams', function() {
              expect(chaiHttpResponse.status).to.be.equal(200);
             
              expect(chaiHttpResponse.body).to.deep.equal(Allteams);
-        });
+
+            });
+        it('GET /teams/id: Retorna um time', async function() {
+            sinon.stub(Teams, 'findByPk').resolves(Allteams[1] as Teams);
+            
+            chaiHttpResponse = await chai.request(app).get('/teams/2');
+            
+            expect(chaiHttpResponse.status).to.be.equal(200);
+
+            expect(chaiHttpResponse.body).to.deep.equal(Allteams[1]);
     });
 });
 
