@@ -12,7 +12,7 @@ class Users extends Model<InferAttributes<Users>> {
 Users.init(
   {
     id: {
-      type: DataTypes.NUMBER,
+      type: DataTypes.INTEGER,
       primaryKey: true,
       allowNull: false,
       autoIncrement: true,
