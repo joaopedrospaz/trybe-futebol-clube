@@ -22,7 +22,7 @@ export default class UsersService implements IUserService {
 
     if (!verifyPassword) throw new InvalidParams('Invalid email or password');
 
-    const { id, role, username } = user.dataValues;
+    const { id, role, username } = user;
 
     return createToken({ id, role, username, email });
   }
