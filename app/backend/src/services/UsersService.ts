@@ -2,6 +2,8 @@ import * as bcrypt from 'bcryptjs';
 import { createToken } from '../utils/tokenFunctions';
 import Users from '../database/models/usersModel';
 import IUserService, { ILogin } from './interfaces/usersServiceInterfaces';
+import InvalidParams from '../errors/invalidParams';
+import validate from './validations/LoginValidation';
 
 export default class UsersService implements IUserService {
   private _userMdeol;
@@ -12,12 +14,13 @@ export default class UsersService implements IUserService {
 
   async login(data: ILogin) {
     const { email, password } = data;
+    validate(data);
     const user = await this._userMdeol.findOne({ where: { email } });
 
-    if (!user) throw new Error('User not found');
+    if (!user) throw new InvalidParams('Invalid email or password');
     const verifyPassword = bcrypt.compareSync(password, user.password);
 
-    if (!verifyPassword) throw new Error('Password invalid');
+    if (!verifyPassword) throw new InvalidParams('Invalid email or password');
 
     const { id, role, username } = user.dataValues;
 
