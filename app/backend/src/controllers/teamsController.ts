@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import TeamServiceBase from '../service/interfaces/teamsServiceInterfaces';
+import TeamServiceBase from '../services/interfaces/teamsServiceInterfaces';
 import ITeamsController from './interfaces/teamsControllerInterfaces';
 
 export default class TeamsController implements ITeamsController {
