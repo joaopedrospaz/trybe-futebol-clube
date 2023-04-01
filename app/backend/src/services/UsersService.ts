@@ -1,6 +1,6 @@
 import * as bcrypt from 'bcryptjs';
 import { createToken } from '../utils/tokenFunctions';
-import Users from '../database/models/usersModel';
+import Users from '../database/models/UsersModel';
 import IUserService, { ILogin } from './interfaces/usersServiceInterfaces';
 import InvalidParams from '../errors/invalidParams';
 import validate from './validations/LoginValidation';

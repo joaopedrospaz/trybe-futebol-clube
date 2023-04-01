@@ -7,6 +7,7 @@ import AuthToken from '../middlewares/AuthToken';
 const LoginRouter = Router();
 const service = new UsersService();
 const controller = new UserController(service);
+
 LoginRouter.post('/', VeriryLogin, controller.login.bind(controller));
 LoginRouter.get('/role', AuthToken, controller.getRole.bind(controller));
 
