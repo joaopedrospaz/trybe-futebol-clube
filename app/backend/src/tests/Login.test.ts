@@ -12,7 +12,7 @@ const { expect } = chai;
 
 describe('Testa a rota de Login', function() {
     let chaiHttpResponse: Response;
-    this.afterEach(() => {
+    afterEach(() => {
         sinon.restore();
     });
     describe('POST /login', function() {

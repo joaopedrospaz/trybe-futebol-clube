@@ -15,11 +15,11 @@ export default class UsersService implements IUserService {
   async login(data: ILogin) {
     const { email, password } = data;
     validate(data);
+
     const user = await this._userMdeol.findOne({ where: { email } });
-
     if (!user) throw new InvalidParams('Invalid email or password');
-    const verifyPassword = bcrypt.compareSync(password, user.password);
 
+    const verifyPassword = bcrypt.compareSync(password, user.password);
     if (!verifyPassword) throw new InvalidParams('Invalid email or password');
 
     const { id, role, username } = user;

@@ -9,17 +9,16 @@ export default class MatchesService {
   }
 
   async getAll(inProgressQuery: string) {
-    if (inProgressQuery === 'true') {
+    if (inProgressQuery) {
+      const inProgress = inProgressQuery === 'true';
       const filter = await this._matchesModel.findAll(
         {
-          where: { inProgress: true },
+          where: { inProgress },
           include: [{ model: Teams, as: 'homeTeam' }, { model: Teams, as: 'awayTeam' }],
         },
       );
       return filter;
     }
-    console.log('___________________');
-
     const all = await this._matchesModel.findAll(
       { include: [{ model: Teams, as: 'homeTeam' }, { model: Teams, as: 'awayTeam' }] },
     );
