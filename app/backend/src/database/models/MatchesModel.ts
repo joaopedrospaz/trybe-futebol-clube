@@ -17,6 +17,7 @@ Matches.init({
     type: DataTypes.INTEGER,
     allowNull: false,
     autoIncrement: true,
+
   },
   homeTeamId: {
     type: DataTypes.INTEGER,
@@ -45,7 +46,7 @@ Matches.init({
   modelName: 'matches',
 });
 
-Matches.belongsTo(Teams, { foreignKey: 'homeTeamId', as: 'id' });
-Matches.belongsTo(Teams, { foreignKey: 'awayTeamId', as: 'id' });
+Matches.belongsTo(Teams, { foreignKey: 'homeTeamId', as: 'homeTeam' });
+Matches.belongsTo(Teams, { foreignKey: 'awayTeamId', as: 'awayTeam' });
 
 export default Matches;

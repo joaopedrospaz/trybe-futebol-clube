@@ -5,7 +5,7 @@ import IUserController from './interfaces/usersControllerInterfaces';
 
 export default class UserController implements IUserController {
   private _userService: IUserService;
-  private _role: string | undefined;
+  // private _role: string | undefined;
 
   constructor(userService: IUserService) {
     this._userService = userService;
@@ -21,9 +21,9 @@ export default class UserController implements IUserController {
     }
   }
 
-  getRole(req: IRequest, res: Response): Response {
+  static getRole(req: IRequest, res: Response): Response {
     const role = req.user?.role;
-    this._role = role;
+    // this._role = role;
     // mudar essa gambiarra
     return res.status(200).json({ role });
   }
