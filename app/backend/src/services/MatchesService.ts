@@ -24,4 +24,8 @@ export default class MatchesService {
     );
     return all;
   }
+
+  async finishMatcher(id: number) {
+    await this._matchesModel.update({ inProgress: false }, { where: { id } });
+  }
 }
