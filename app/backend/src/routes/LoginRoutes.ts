@@ -1,10 +1,10 @@
 import { Router } from 'express';
-import UserController from '../controllers/UsersController';
-import UsersService from '../services/UsersService';
+import UserController from '../controllers/LoginController';
+import LoginService from '../services/LoginService';
 import AuthToken from '../middlewares/AuthToken';
 
 const LoginRouter = Router();
-const service = new UsersService();
+const service = new LoginService();
 const controller = new UserController(service);
 
 LoginRouter.post('/', controller.login.bind(controller));

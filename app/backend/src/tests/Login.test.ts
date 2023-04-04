@@ -1,5 +1,6 @@
 import * as sinon from 'sinon';
 import * as chai from 'chai';
+import * as jwt from 'jsonwebtoken';
 // @ts-ignore
 import chaiHttp = require('chai-http');
 import { app } from '../app';
@@ -7,6 +8,7 @@ import Users from '../database/models/UsersModel';
 import  { userModelResult, userResponseResult } from './mocks/LoginMock';
 import { Response } from 'superagent';
 import { Model } from 'sequelize';
+import IData from '../utils/interfaces/tokenInterface';
 chai.use(chaiHttp);
 const { expect } = chai;
 
@@ -69,4 +71,28 @@ describe('Testa a rota de Login', function() {
             });
         });
     });
+    describe('GET /login/role', function() {
+        describe('Quando há erro no token', function() {
+            it('Deve retornar o status 201 caso o token não seja informado', async function() {
+                chaiHttpResponse = await chai.request(app).get('/login/role');
+                expect(chaiHttpResponse.status).to.be.equal(401);
+                expect(chaiHttpResponse.body).to.deep.equal({message: 'Token not found'});
+            });
+            it('Deve retornar o status 201 caso o token informado seja inválido', async function() {
+                chaiHttpResponse = await chai.request(app).get('/login/role').set('authorization', 'sofhwofhowfho');
+
+                expect(chaiHttpResponse.status).to.be.equal(401);
+                expect(chaiHttpResponse.body).to.deep.equal({message: 'Token must be a valid token'});
+            });
+        });
+        describe('Quando a requisição é feita com sucesso', function() {
+            it('Deve retornar o status 200', async function() {
+                sinon.stub(jwt, 'verify').returns(userResponseResult as any);
+
+                chaiHttpResponse = await chai.request(app).get('/login/role').set('authorization', 'esseeotoken');
+                expect(chaiHttpResponse.status).to.be.equal(200);
+                expect(chaiHttpResponse.body).to.deep.equal({role: 'user'});
+            });
+        });
+    })
 });
