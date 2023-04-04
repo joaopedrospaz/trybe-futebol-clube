@@ -9,7 +9,6 @@ const AuthToken = (req: IRequest, res: Response, next: NextFunction) => {
   if (!token) return res.status(401).json({ message: 'Token not found' });
   try {
     const auth = verifyToken(token);
-
     req.user = auth as Omit<IData, 'password'>;
   } catch (error) {
     return res.status(401).json({ message: 'Token must be a valid token' });
