@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import MatchesService from '../services/MatchesService';
 
 export default class MatchesController {
@@ -30,10 +30,13 @@ export default class MatchesController {
     return res.status(200).json('GOOOOOOOOOOL');
   }
 
-  async createMatcher(req: Request, res: Response): Promise<Response> {
+  async createMatcher(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
     const data = req.body;
-    const result = await this._matchesService.createMatcher({ ...data, inProgress: true });
-
-    return res.status(201).json(result);
+    try {
+      const result = await this._matchesService.createMatcher({ ...data, inProgress: true });
+      return res.status(201).json(result);
+    } catch (error) {
+      next(error);
+    }
   }
 }
