@@ -21,4 +21,19 @@ export default class MatchesController {
 
     return res.status(200).json({ message: 'Finished' });
   }
+
+  async updateResultMatcher(req: Request, res: Response): Promise<Response> {
+    const { id } = req.params;
+    const score = req.body;
+    await this._matchesService.updateResultMatcher(Number(id), score);
+
+    return res.status(200).json('GOOOOOOOOOOL');
+  }
+
+  async createMatcher(req: Request, res: Response): Promise<Response> {
+    const data = req.body;
+    const result = await this._matchesService.createMatcher({ ...data, inProgress: true });
+
+    return res.status(201).json(result);
+  }
 }

@@ -64,7 +64,8 @@ describe('Testa a rota de Login', function() {
                 chaiHttpResponse = await chai.request(app).post('/login').send({email: 'email@email.com', password: 'secret_user'});
 
                 expect(chaiHttpResponse.status).to.be.equal(200);
-                // expect(chaiHttpResponse.body).to.be.equal({token});
+                expect(chaiHttpResponse.body).to.have.key('token');
+                expect(chaiHttpResponse.body.token).to.have.a('string');
             });
         });
     });

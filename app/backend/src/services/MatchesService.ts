@@ -1,5 +1,6 @@
 import Teams from '../database/models/TeamsModel';
 import Matches from '../database/models/MatchesModel';
+import IScore, { ICreate, ICreateResult } from './interfaces/MatchesInterfaces';
 
 export default class MatchesService {
   private _matchesModel;
@@ -25,7 +26,20 @@ export default class MatchesService {
     return all;
   }
 
-  async finishMatcher(id: number) {
+  async finishMatcher(id: number): Promise<void> {
     await this._matchesModel.update({ inProgress: false }, { where: { id } });
+  }
+
+  async updateResultMatcher(id: number, score: IScore): Promise<void> {
+    const { homeTeamGoals, awayTeamGoals } = score;
+    await this._matchesModel.update(
+      { homeTeamGoals, awayTeamGoals },
+      { where: { id } },
+    );
+  }
+
+  async createMatcher(data: ICreate): Promise<ICreateResult> {
+    const insert = await this._matchesModel.create({ ...data });
+    return insert;
   }
 }
