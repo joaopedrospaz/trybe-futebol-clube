@@ -10,6 +10,8 @@ const teamsService = new TeamsService();
 const service = new LeaderboardsService(matchesService, teamsService);
 const controller = new LeaderboardsController(service);
 
-LeaderboardsRoutes.get('/home', controller.board.bind(controller));
+LeaderboardsRoutes.get('/', controller.board.bind(controller));
+LeaderboardsRoutes.get('/home', controller.boardHome.bind(controller));
+LeaderboardsRoutes.get('/away', controller.boardaAway.bind(controller));
 
 export default LeaderboardsRoutes;
