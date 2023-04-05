@@ -131,6 +131,16 @@ export default class LeaderboardsService {
     return golsOwn;
   }
 
+  getGoalsBalance(id: number) {
+    return this.getGoalsFavor(id) - this.getGoalsOwn(id);
+  }
+
+  getEfficiency(id: number) {
+    const efficiency = this.getTotalPoints(id) / (this.getTotalGames() * 3);
+
+    return (efficiency * 100).toFixed(2);
+  }
+
   getLeaderBoard(teamsMatcher: ITeamsMatcher) {
     const { teamId, name, matches } = teamsMatcher;
     this._leaderBoard = matches;
@@ -144,6 +154,8 @@ export default class LeaderboardsService {
       totalLosses: this.getTotalLosses(teamId),
       goalsFavor: this.getGoalsFavor(teamId),
       goalsOwn: this.getGoalsOwn(teamId),
+      goalsBalance: this.getGoalsBalance(teamId),
+      efficiency: this.getEfficiency(teamId),
     };
   }
 }
