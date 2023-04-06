@@ -1,7 +1,7 @@
 import MatchesService from './MatchesService';
 import TeamsService from './teamsService';
 import { ICreateResult } from './interfaces/MatchesInterfaces';
-import { ITeamsMatcher } from './interfaces/LeaderboardsInterfaces';
+import { IDataLeaderBoard, ITeamsMatcher } from './interfaces/LeaderboardsInterfaces';
 
 export default class LeaderboardsService {
   private _teamsService: TeamsService;
@@ -141,7 +141,7 @@ export default class LeaderboardsService {
     return (efficiency * 100).toFixed(2);
   }
 
-  getLeaderBoard(teamsMatcher: ITeamsMatcher) {
+  getLeaderBoard(teamsMatcher: ITeamsMatcher): IDataLeaderBoard {
     const { teamId, name, matches } = teamsMatcher;
     this._leaderBoard = matches;
 

@@ -3,12 +3,14 @@ import UnprocessableEntity from '../errors/unprocessableEntity';
 import Teams from '../database/models/TeamsModel';
 import Matches from '../database/models/MatchesModel';
 import IScore, { ICreate, ICreateResult } from './interfaces/MatchesInterfaces';
+import { ITeam } from './interfaces/teamsServiceInterfaces';
 
 export default class MatchesService {
   private _matchesModel;
-
+  private _teamsModel;
   constructor() {
     this._matchesModel = Matches;
+    this._teamsModel = Teams;
   }
 
   async getAll(inProgressQuery: string) {
@@ -40,8 +42,8 @@ export default class MatchesService {
     );
   }
 
-  async findByID(id: number):Promise<Matches | null> {
-    const team = await this._matchesModel.findByPk(id);
+  async findByID(id: number):Promise<ITeam | null> {
+    const team = await this._teamsModel.findByPk(id);
     return team;
   }
 

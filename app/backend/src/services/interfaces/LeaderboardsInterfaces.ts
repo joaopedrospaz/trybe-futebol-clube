@@ -15,5 +15,18 @@ interface ICalculate extends ICreateResult {
   teamId: number
 }
 
+interface IDataLeaderBoard {
+  name: string,
+  totalPoints: number,
+  totalGames: number,
+  totalVictories: number,
+  totalDraws: number,
+  totalLosses: number,
+  goalsFavor: number,
+  goalsOwn: number,
+  goalsBalance: number,
+  efficiency: string,
+}
+
 export default ITotalPoints;
-export { ITeamsMatcher, ICalculate };
+export { ITeamsMatcher, ICalculate, IDataLeaderBoard };
