@@ -5,46 +5,41 @@ import { IDataLeaderBoard, ITeamsMatcher } from './interfaces/LeaderboardsInterf
 
 export default class LeaderboardsService {
   private _teamsService: TeamsService;
-  private _matchesService: MatchesService;
   private _leaderBoard: ICreateResult[] | [];
 
   constructor(matchesService: MatchesService, teamsService: TeamsService) {
-    this._matchesService = matchesService;
     this._teamsService = teamsService;
     this._leaderBoard = [];
   }
 
-  async getAllLeaderboards() {
-    const teams = await this._teamsService.getAll();
-    const matches = await this._matchesService.justGetAll();
+  async getAllLeaderboards(): Promise<ITeamsMatcher[]> {
+    const teams = await this._teamsService.getAllWithMatches();
 
-    const teamsMatcher = teams
-      .map((team) => ({
-        teamId: team.id,
-        name: team.teamName,
-        matches: matches
-          .filter((matcher) => matcher.homeTeamId === team.id || matcher.awayTeamId === team.id),
-      }));
-    return teamsMatcher;
+    return teams;
   }
 
   async getHomeLeaderboards(): Promise<ITeamsMatcher[]> {
     const all = await this.getAllLeaderboards();
 
-    return all.map((result) => ({
-      teamId: result.teamId,
-      name: result.name,
-      matches: result.matches.filter((r) => r.homeTeamId === result.teamId),
+    const filterHome = all.map(({ id, teamName, homeMatches }) => ({
+      id,
+      teamName,
+      homeMatches,
     }));
+
+    return filterHome;
   }
 
-  async getawayLeaderboards() {
+  async getawayLeaderboards(): Promise<ITeamsMatcher[]> {
     const all = await this.getAllLeaderboards();
-    return all.map((result) => ({
-      teamId: result.teamId,
-      name: result.name,
-      matches: result.matches.filter((r) => r.awayTeamId === result.teamId),
+
+    const filterHome = all.map(({ id, teamName, awayMatches }) => ({
+      id,
+      teamName,
+      awayMatches,
     }));
+
+    return filterHome;
   }
 
   getTotalPoints(id: number): number {
@@ -142,20 +137,23 @@ export default class LeaderboardsService {
   }
 
   getLeaderBoard(teamsMatcher: ITeamsMatcher): IDataLeaderBoard {
-    const { teamId, name, matches } = teamsMatcher;
-    this._leaderBoard = matches;
+    const { id, teamName, homeMatches, awayMatches } = teamsMatcher;
+
+    if (homeMatches) this._leaderBoard = homeMatches;
+    if (awayMatches) this._leaderBoard = awayMatches;
+    if (homeMatches && awayMatches) this._leaderBoard = [...homeMatches, ...awayMatches];
 
     return {
-      name,
-      totalPoints: this.getTotalPoints(teamId),
+      name: teamName,
+      totalPoints: this.getTotalPoints(id),
       totalGames: this.getTotalGames(),
-      totalVictories: this.getTotalVictories(teamId),
-      totalDraws: this.getTotalDraws(teamId),
-      totalLosses: this.getTotalLosses(teamId),
-      goalsFavor: this.getGoalsFavor(teamId),
-      goalsOwn: this.getGoalsOwn(teamId),
-      goalsBalance: this.getGoalsBalance(teamId),
-      efficiency: this.getEfficiency(teamId),
+      totalVictories: this.getTotalVictories(id),
+      totalDraws: this.getTotalDraws(id),
+      totalLosses: this.getTotalLosses(id),
+      goalsFavor: this.getGoalsFavor(id),
+      goalsOwn: this.getGoalsOwn(id),
+      goalsBalance: this.getGoalsBalance(id),
+      efficiency: this.getEfficiency(id),
     };
   }
 }

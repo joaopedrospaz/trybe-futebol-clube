@@ -1,5 +1,6 @@
 import Teams from '../database/models/TeamsModel';
 import TeamServiceBase, { ITeam } from './interfaces/teamsServiceInterfaces';
+import Matches from '../database/models/MatchesModel';
 
 export default class TeamsService implements TeamServiceBase {
   private _teamModel;
@@ -13,9 +14,15 @@ export default class TeamsService implements TeamServiceBase {
     return all;
   }
 
+  async getAllWithMatches(): Promise<ITeam[]> {
+    const allTeams = await this._teamModel.findAll({
+      include: [{ model: Matches, as: 'homeMatches' }, { model: Matches, as: 'awayMatches' }],
+    });
+    return allTeams;
+  }
+
   async getById(id: number): Promise<ITeam | null> {
     const team = await this._teamModel.findByPk(id);
-    // alterar essa tipagem usando <T>
-    return team as ITeam;
+    return team;
   }
 }

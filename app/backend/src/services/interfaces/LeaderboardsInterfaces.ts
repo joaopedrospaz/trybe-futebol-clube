@@ -6,9 +6,10 @@ interface ITotalPoints {
 }
 
 interface ITeamsMatcher {
-  'teamId': number,
-  'name': string,
-  'matches': ICreateResult[]
+  'id': number,
+  'teamName': string,
+  'homeMatches'?: ICreateResult[],
+  'awayMatches'?: ICreateResult[],
 }
 
 interface ICalculate extends ICreateResult {

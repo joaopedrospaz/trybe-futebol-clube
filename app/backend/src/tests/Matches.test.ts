@@ -7,7 +7,7 @@ import Matches from '../database/models/MatchesModel';
 import { app } from '../app';
 import * as jwt from 'jsonwebtoken';
 import { Response } from 'superagent';
-import getALlMock, { PostResult, findAwayTeam, findHomeTeam, invalidPostHome, invalidPostoMatcherMock, updateScoreMock, validPost } from './mocks/MatchesMock';
+import getALlMock, { PostResult, findAwayTeam, findHomeTeam, inProgressFalseMock, inProgressTrueMock, invalidPostHome, invalidPostoMatcherMock, updateScoreMock, validPost } from './mocks/MatchesMock';
 import Teams from '../database/models/TeamsModel';
 chai.use(chaiHttp);
 const {expect} = chai;
@@ -24,6 +24,26 @@ describe('Testa a rota de Matches', function() {
                 chaiHttpResponse = await chai.request(app).get('/matches');
                 expect(chaiHttpResponse.status).to.be.equal(200);
                 expect(chaiHttpResponse.body).to.deep.equal(getALlMock);
+
+            });
+        });
+    });
+    describe('GET /matches?inProgress', function() {
+        describe('Quando a requisição é feita com sucesso', function() {
+            it('Deve retornar a lista completa de times com inProgress = false com status 200', async function() {
+                sinon.stub(Model, 'findAll').resolves(inProgressFalseMock as any);
+                chaiHttpResponse = await chai.request(app).get('/matches?inProgress=false');
+
+                expect(chaiHttpResponse.status).to.be.equal(200);
+                expect(chaiHttpResponse.body).to.deep.equal(inProgressFalseMock);
+
+            });
+            it('Deve retornar a lista completa de times com inProgress = true com status 200', async function() {
+                sinon.stub(Model, 'findAll').resolves(inProgressTrueMock as any);
+                chaiHttpResponse = await chai.request(app).get('/matches?inProgress=true');
+
+                expect(chaiHttpResponse.status).to.be.equal(200);
+                expect(chaiHttpResponse.body).to.deep.equal(inProgressTrueMock);
 
             });
         });

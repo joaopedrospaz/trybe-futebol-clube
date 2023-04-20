@@ -47,11 +47,6 @@ export default class MatchesService {
     return team;
   }
 
-  async justGetAll() {
-    const all = await this._matchesModel.findAll();
-    return all;
-  }
-
   async createMatcher(data: ICreate): Promise<ICreateResult> {
     const { homeTeamId, awayTeamId } = data;
     if (homeTeamId === awayTeamId) {
