@@ -1,10 +1,10 @@
-# :construction: README em construção ! :construction:
-<!-- Olá, Tryber!
-Esse é apenas um arquivo inicial para o README do seu projeto.
-É essencial que você preencha esse documento por conta própria, ok?
-Não deixe de usar nossas dicas de escrita de README de projetos, e deixe sua criatividade brilhar!
-:warning: IMPORTANTE: você precisa deixar nítido:
-- quais arquivos/pastas foram desenvolvidos por você; 
-- quais arquivos/pastas foram desenvolvidos por outra pessoa estudante;
-- quais arquivos/pastas foram desenvolvidos pela Trybe.
--->
+
+# Trybe Futebol Clube
+
+<p>O TFC é um site informativo sobre partidas e classificações de futebol. Nele, é possível acompanhar, alterar e criar novas partidas, além de conferir a classificação e o desempenho dos times. Fui responsável pelo desenvolvimento da parte do back-end, onde criei um ambiente dockerizado e utilizei a modelagem de dados do MySQL por meio do Sequelize. Assim, construí a API responsável por alimentar a parte do Front End.<p/>
+ 
+## Tecnologias/Ferramentas usadas
+
+
+
+
