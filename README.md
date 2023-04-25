@@ -9,7 +9,9 @@
   <li>Mysql</li> 
   <li>MySQL Workbench</li> 
   <li>Sequelize</li> 
-  <li>Express</li> 
+  <li>Express</li>
+  <li>SOLID</li> 
+  <li>POO</li> 
   <li>TypeScript</li> 
   <li>Node</li> 
   <li>Docker</li>
@@ -39,3 +41,8 @@
  ![nota do projeto](images/nota.png)
  
 </details>
+
+## Autor
+[João Pedro Silva da Paz](https://github.com/joaopedrospaz)
+<br/>
+[Linkedin](https://www.linkedin.com/in/joaopedropaz/)
